@@ -5,13 +5,22 @@ export function useTodos() {
     const isInitialized = useRef(false);
     const [todos, setTodos] = useState<TodoModel[]>([]);
 
-    const getApiData = async () => {
-        console.log("fetching")
-        const response = await fetch(
+    const getApiData = () => {
+        fetch(
             "https://gorest.co.in/public/v2/todos/"
-        ).then((response) => response.json()) as TodoModel[];
+        ).then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Something went wrong');
+        }).then((values) => {
+            setTodos(values);
 
-        setTodos(response);
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+
     };
 
     useEffect(() => {
@@ -21,5 +30,5 @@ export function useTodos() {
         getApiData();
     }, []);
 
-    return {todos: todos, isInitialized : isInitialized.current};
+    return {todos: todos, isInitialized: isInitialized.current};
 }
