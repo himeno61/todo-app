@@ -9,3 +9,23 @@
   padding: 2em;
 }
 
+.wrapper {
+  /*width: 100%;*/
+  /*min-width: 2em; !* Will be AT LEAST 20em wide *!*/
+  /*min-height: 400px;*/
+}
+
+
+.todos-table-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items:baseline;
+  gap: 1rem;
+}
+
+.filter-box-input {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}

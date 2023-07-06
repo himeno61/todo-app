@@ -3,5 +3,7 @@ export interface TodoModel {
     user_id: number
     title: string
     due_on: string
-    status: string
+    status: TodoStatus
 }
+
+export type TodoStatus = "completed"| "pending";
