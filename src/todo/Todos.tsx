@@ -7,17 +7,21 @@ import {useTodos} from "./useTodos.ts";
 
 const Todos = () => {
 
-    const [filterText, setFilterText] = useState('');
-    const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const {todos,isInitialized} = useTodos();
+    const [filterTitleText, setFilterTitleText] = useState('');
+    const [filterUserIdText, setFilterUserIdText] = useState('');
+    const {todos, isInitialized} = useTodos();
 
-    const filteredItems = todos.filter(item => item.title && item.title.toLowerCase().includes(filterText.toLowerCase()),);
+    const filteredItems = todos.filter(item => {
+        return item.title && item.title.toLowerCase().includes(filterTitleText.toLowerCase()) && item.user_id && item.user_id.toString().includes(filterUserIdText.toLowerCase());
+    });
 
     const subHeaderComponentMemo = useMemo(() => {
         const handleClear = () => {
-            if (filterText) {
-                setResetPaginationToggle(!resetPaginationToggle);
-                setFilterText('');
+            if (filterTitleText) {
+                setFilterTitleText('');
+            }
+            if (filterUserIdText) {
+                setFilterUserIdText('');
             }
         };
 
@@ -26,20 +30,36 @@ const Todos = () => {
                 <h5>
                     Total count: {filteredItems.length}
                 </h5>
-                <TextField
-                    id="search"
-                    type="text"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setFilterText(e.target.value)
-                    }
-                    value={filterText}
-                    placeholder={"Filter by title"}
-                />
+                <div className={"filter-textfield-label"}>
+                    <label htmlFor="search-field-title">Title: </label>
+                    <TextField
+                        id="search-field-title"
+                        type="text"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setFilterTitleText(e.target.value)
+                        }
+                        value={filterTitleText}
+                        placeholder={"Filter by title"}
+                    />
+                </div>
+
+                <div className={"filter-textfield-label"}>
+                    <label htmlFor="search-field-title">User id: </label>
+                    <TextField
+                        id="search-field-user-id"
+                        type="text"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setFilterUserIdText(e.target.value)
+                        }
+                        value={filterUserIdText}
+                        placeholder={"Filter by user id"}
+                    />
+                </div>
                 <Button type="button" onClick={handleClear}>X</Button>
             </div>
         );
 
-    }, [filterText, filteredItems.length, resetPaginationToggle]);
+    }, [filterTitleText, filterUserIdText, filteredItems.length]);
 
     createTheme('tableTheme', {
         text: {
