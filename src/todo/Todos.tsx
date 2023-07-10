@@ -79,7 +79,7 @@ const Todos = () => {
         },
         background: {
             default: 'transparent',
-            secondary: '#ffffff',
+            secondary: '#696969',
         },
         action: {
             button: 'rgba(0,0,0,.54)',
