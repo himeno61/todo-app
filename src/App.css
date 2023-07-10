@@ -50,3 +50,13 @@
 .cell-title {
   word-break: normal;
 }
+
+.todo-expanded {
+  display: grid;
+  align-items:flex-start;
+  margin-bottom: 1rem;
+}
+
+.todo-expanded-row {
+  width: 100%;
+}

@@ -1,18 +1,20 @@
 import React, {useMemo, useState} from "react";
 import {TodoModel} from "./TodoModel.ts";
-import DataTable, {TableColumn, createTheme} from "react-data-table-component"
+import DataTable, {createTheme, Media, TableColumn} from "react-data-table-component"
 import TextField from "../components/TextField.tsx";
 import Button from "../components/Button.tsx";
 import {useTodos} from "./useTodos.ts";
 import {StyleSheetManager} from "styled-components";
 import isPropValid from '@emotion/is-prop-valid';
+import {useMediaQuery} from 'react-responsive';
+import TodoExpanded from "./TodoExpanded.tsx";
 
 
 const Todos = () => {
-
     const [filterTitleText, setFilterTitleText] = useState<string>('');
     const [filterUserIdText, setFilterUserIdText] = useState<string>('');
     const {todos, isInitialized} = useTodos();
+    const isMobile = useMediaQuery({ query: `(max-width: 768px)` });
 
     const filteredItems = todos.filter(item => {
         return item.title && item.title.toLowerCase().includes(filterTitleText.toLowerCase()) && item.user_id && item.user_id.toString().includes(filterUserIdText.toLowerCase());
@@ -93,13 +95,14 @@ const Todos = () => {
                 name: 'Id',
                 selector: row => row.id,
                 sortable: true,
-                maxWidth: "100px"
+                maxWidth: "100px",
             },
             {
                 name: 'User id',
                 selector: row => row.user_id,
                 sortable: true,
                 maxWidth: "100px",
+                hide: Media.MD
             },
             {
                 name: 'Title',
@@ -118,6 +121,7 @@ const Todos = () => {
                 selector: row => new Date(Date.parse(row.due_on)).toDateString(),
                 sortable: true,
                 maxWidth: "200px",
+                hide: Media.MD
             },
             {
                 name: 'Status',
@@ -156,6 +160,8 @@ const Todos = () => {
                     subHeaderComponent={subHeaderComponentMemo}
                     progressPending={!isInitialized}
                     customStyles={customStyles}
+                    expandableRows={isMobile}
+                    expandableRowsComponent={TodoExpanded}
                 />
             </StyleSheetManager>
         </div>
