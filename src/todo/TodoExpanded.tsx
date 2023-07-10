@@ -8,7 +8,7 @@ const TodoExpanded = ({data}: TodoExpandedProps) => {
 
     return (
         <div className={"todo-expanded"}>
-            {Object.entries(data).map(([key, value]) => <TodoExpandedRow name={key} value={value}/>)}
+            {Object.entries(data).map(([key, value]) => <TodoExpandedRow key={key} name={key} value={value}/>)}
         </div>
     );
 };
