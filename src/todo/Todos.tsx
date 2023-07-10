@@ -29,37 +29,40 @@ const Todos = () => {
         };
 
         return (
-            <div className={"todos-table-header"}>
-                <h5>
-                    Total count: {filteredItems.length}
-                </h5>
-                <div className={"filter-textfield-label"}>
-                    <label htmlFor="search-field-title">Title: </label>
-                    <TextField
-                        id="search-field-title"
-                        type="text"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setFilterTitleText(e.target.value)
-                        }
-                        value={filterTitleText}
-                        placeholder={"Filter by title"}
-                    />
-                </div>
+            <div className={"todos-table-header-wrapper"}>
+                <div className={"todos-table-header"}>
+                    <h5>
+                        Total count: {filteredItems.length}
+                    </h5>
+                    <div className={"filter-textfield-label"}>
+                        <label htmlFor="search-field-title">Title: </label>
+                        <TextField
+                            id="search-field-title"
+                            type="text"
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                setFilterTitleText(e.target.value)
+                            }
+                            value={filterTitleText}
+                            placeholder={"Filter by title"}
+                        />
+                    </div>
 
-                <div className={"filter-textfield-label"}>
-                    <label htmlFor="search-field-title">User id: </label>
-                    <TextField
-                        id="search-field-user-id"
-                        type="text"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setFilterUserIdText(e.target.value)
-                        }
-                        value={filterUserIdText}
-                        placeholder={"Filter by user id"}
-                    />
+                    <div className={"filter-textfield-label"}>
+                        <label htmlFor="search-field-title">User id: </label>
+                        <TextField
+                            id="search-field-user-id"
+                            type="text"
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                setFilterUserIdText(e.target.value)
+                            }
+                            value={filterUserIdText}
+                            placeholder={"Filter by user id"}
+                        />
+                    </div>
+                    <Button type="button" onClick={handleClear}>X</Button>
                 </div>
-                <Button type="button" onClick={handleClear}>X</Button>
             </div>
+
         );
 
     }, [filterTitleText, filterUserIdText, filteredItems.length]);
@@ -90,31 +93,37 @@ const Todos = () => {
                 name: 'Id',
                 selector: row => row.id,
                 sortable: true,
-                width: "100px"
+                maxWidth: "100px"
             },
             {
                 name: 'User id',
                 selector: row => row.user_id,
                 sortable: true,
-                width: "100px"
+                maxWidth: "100px",
             },
             {
                 name: 'Title',
                 selector: row => row.title,
                 sortable: true,
-                width: "500px"
+                cell: ((row) => {
+                    return (
+                        <div className={"cell-title"}>
+                            {row.title}
+                        </div>
+                    );
+                })
             },
             {
                 name: 'Due_on',
                 selector: row => new Date(Date.parse(row.due_on)).toDateString(),
                 sortable: true,
-                width: "200px",
+                maxWidth: "200px",
             },
             {
                 name: 'Status',
                 selector: row => row.status,
                 sortable: true,
-                width: "90px",
+                maxWidth: "50px",
                 cell: ((row) => {
                     if (row.status === "pending") {
                         return (<div>⏳</div>);
@@ -136,18 +145,20 @@ const Todos = () => {
     };
 
     return (
-        <StyleSheetManager shouldForwardProp={isPropValid}>
-            <DataTable
-                title="Todos"
-                columns={columns}
-                data={filteredItems}
-                theme="tableTheme"
-                subHeader
-                subHeaderComponent={subHeaderComponentMemo}
-                progressPending={!isInitialized}
-                customStyles={customStyles}
-            />
-        </StyleSheetManager>
+        <div className={"wrapper"}>
+            <StyleSheetManager shouldForwardProp={isPropValid}>
+                <DataTable
+                    title="Todos"
+                    columns={columns}
+                    data={filteredItems}
+                    theme="tableTheme"
+                    subHeader
+                    subHeaderComponent={subHeaderComponentMemo}
+                    progressPending={!isInitialized}
+                    customStyles={customStyles}
+                />
+            </StyleSheetManager>
+        </div>
     );
 
 }

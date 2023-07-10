@@ -3,25 +3,39 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  width:100vw;
+  overflow: auto;
 }
 
 .card {
-  padding: 2em;
+  width: auto;
 }
 
 .wrapper {
-  /*width: 100%;*/
-  /*min-width: 2em; !* Will be AT LEAST 20em wide *!*/
-  /*min-height: 400px;*/
+  width: 100%;
+  display:flex;
+  flex-direction: column;
 }
 
+.todos-table-header-wrapper {
+  width: 100%;
+  text-align: center;
+}
 
 .todos-table-header{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items:flex-end;
-  gap: 1rem;
+  gap: 0.4rem;
+}
+
+@media (max-width: 768px) {
+    .todos-table-header{
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+    }
 }
 
 .filter-textfield-label {
@@ -30,7 +44,9 @@
 }
 
 .filter-box-input {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
+  width: 100%;
+}
+
+.cell-title {
+  word-break: normal;
 }
