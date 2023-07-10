@@ -8,10 +8,7 @@ const TodoExpanded = ({data}: TodoExpandedProps) => {
 
     return (
         <div className={"todo-expanded"}>
-            {Object.entries(data).map(([key, value]) => {
-                console.log(`key: ${key}`);
-                return (<TodoExpandedRow name={key} value={value}/>);
-            })}
+            {Object.entries(data).map(([key, value]) => <TodoExpandedRow name={key} value={value}/>)}
         </div>
     );
 };
@@ -23,7 +20,6 @@ interface TodoExpandedRowProps {
 
 const TodoExpandedRow = (props: TodoExpandedRowProps) => {
     const {name, value} = props;
-    console.log(name)
     return (
         <div className={"todo-expanded-row"}>
             <h4>{name}</h4>
