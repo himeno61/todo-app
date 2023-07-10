@@ -4,11 +4,14 @@ import DataTable, {TableColumn, createTheme} from "react-data-table-component"
 import TextField from "../components/TextField.tsx";
 import Button from "../components/Button.tsx";
 import {useTodos} from "./useTodos.ts";
+import {StyleSheetManager} from "styled-components";
+import isPropValid from '@emotion/is-prop-valid';
+
 
 const Todos = () => {
 
-    const [filterTitleText, setFilterTitleText] = useState('');
-    const [filterUserIdText, setFilterUserIdText] = useState('');
+    const [filterTitleText, setFilterTitleText] = useState<string>('');
+    const [filterUserIdText, setFilterUserIdText] = useState<string>('');
     const {todos, isInitialized} = useTodos();
 
     const filteredItems = todos.filter(item => {
@@ -133,7 +136,7 @@ const Todos = () => {
     };
 
     return (
-        <div className={"wrapper"}>
+        <StyleSheetManager shouldForwardProp={isPropValid}>
             <DataTable
                 title="Todos"
                 columns={columns}
@@ -141,12 +144,10 @@ const Todos = () => {
                 theme="tableTheme"
                 subHeader
                 subHeaderComponent={subHeaderComponentMemo}
-                persistTableHead
                 progressPending={!isInitialized}
                 customStyles={customStyles}
             />
-        </div>
-
+        </StyleSheetManager>
     );
 
 }
